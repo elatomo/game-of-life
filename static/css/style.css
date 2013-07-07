@@ -1,0 +1,73 @@
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+  display:block;
+}
+
+body {
+  background: #fff;
+  color: #000;
+  font: 100%/1.4 "HelveticaNeue","Helvetica","Arial",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+.banner-link {
+  position: absolute;
+  top: 5px; right: 5px;
+  z-index: 10;
+  display: block;
+  width: 30px; height: 30px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background-color: gray;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px; color: #fff;
+}
+
+.banner-link:active, .banner-link:focus {
+  outline: none;
+}
+.banner-link:hover, .active {
+  background-color: orange;
+}
+
+#banner {
+  position: absolute;
+  top: 0; left: 0;
+  background-color:rgba(0,0,0,0.7);
+  width: 100%;
+  min-height: 55%;
+  text-align: center;
+  display: none;
+  padding-bottom: 20px;
+}
+
+#banner hgroup {
+  display: block;
+  margin-bottom: 60px;
+}
+
+#banner hgroup h1 {
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: 300%;
+  color: #FFF;
+  margin-bottom: 0px;
+}
+
+#banner hgroup h2 {
+  color: #CFCFB3;
+  font-weight: normal;
+}
+
+#banner a {
+  color: #FFF;
+}
+
+canvas {
+  position: absolute;
+  top: 0; left: 0;
+  z-index: -10;
+}
