@@ -1,6 +1,8 @@
 # Conway's Game Of Life (23/3)
 
-[Conway's Game Of Life](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) implementation using [processing](http://www.processing.org/)/[processing.js](http://processingjs.org/).
+[Conway's Game Of Life](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) toy implementation using [processing](http://www.processing.org/)/[processing.js](http://processingjs.org/).
+
+Check it at http://elatomo.github.io/game-of-life/
 
 ## Try it with processing.js
 
