@@ -136,7 +136,7 @@ GOL.game = (function(myApp, global) {
       world.draw(context);
       world.update();
 
-      requestAnimationFrame( function() {
+      global.window.requestAnimationFrame( function() {
         animate();
       });
     }
