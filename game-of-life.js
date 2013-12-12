@@ -54,7 +54,8 @@ GOL.game = (function(myApp, global) {
     worldWidth: 300,
     worldHeight: 200,
     cellWidth: 20,
-    cellColor: 'black'
+    cellColor: 'black',
+    fps: 15
   };
 
   /**
@@ -131,15 +132,15 @@ GOL.game = (function(myApp, global) {
    * @private
    */
   var animate = function() {
-    if (isActive) {
-      world.clear(context);
-      world.draw(context);
-      world.update();
+    global.window.setTimeout(function() {
+      if (isActive) {
+        world.clear(context);
+        world.draw(context);
+        world.update();
 
-      global.window.requestAnimationFrame( function() {
-        animate();
-      });
-    }
+        global.window.requestAnimationFrame(animate);
+      }
+    }, 1000 / config.fps);
   };
 
   // public API
@@ -159,6 +160,7 @@ GOL.game = (function(myApp, global) {
      * - `worldHeight`: world height in pixels. Defaults to 200.
      * - `cellWidth`: cell width in pixels. Defaults to 20.
      * - `cellColor`: color for new cells. Defaults to `black`.
+     * - `fps`: frames per second. Defaults to `15`.
      */
     configure: function(userConfig) {
       if (isInitialized) {
