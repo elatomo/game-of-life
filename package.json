@@ -1,0 +1,28 @@
+{
+  "name": "game-of-life",
+  "version": "0.0.0",
+  "description": "Conways's Game of Life",
+  "main": "src/game-of-life.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elatomo/game-of-life.git"
+  },
+  "keywords": [
+    "game",
+    "conway",
+    "canvas"
+  ],
+  "author": "José Fernández Ramos",
+  "homepage": "https://github.com/elatomo/game-of-life",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elatomo/game-of-life/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "~0.2.7"
+  }
+}
