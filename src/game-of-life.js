@@ -6,8 +6,8 @@
  *
  * Check the [wikipedia entry](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
  *
- * The Life world is represented using a _toroidal array_, so the active areas
- * that move across a world edge reappear at the opposite edge:
+ * The Life universe is represented using a _toroidal array_, so the active areas
+ * that move across a universe edge reappear at the opposite edge:
  *
  *      15  | 12 13 14 15 | 12
  *      ----------------------
@@ -51,9 +51,9 @@ GOL.game = (function(myApp, global) {
    */
   var config = {
     canvasId: 'gol',
-    worldWidth: 300,
-    worldHeight: 200,
-    cellWidth: 20,
+    width: 300,
+    height: 200,
+    cellWidth: 21,
     cellColor: 'black',
     fps: 15
   };
@@ -73,11 +73,11 @@ GOL.game = (function(myApp, global) {
   var isInitialized = false;
 
   /**
-   * @property world
-   * @type World
+   * @property universe
+   * @type Universe
    * @private
    */
-  var world = null;
+  var universe = null;
 
   /**
    * HTML5 canvas used in the game.
@@ -107,20 +107,20 @@ GOL.game = (function(myApp, global) {
     // set up canvas and context
     canvas = global.document.getElementById(config['canvasId']);
     myApp.validateCanvas(canvas);
-    canvas.width = config.worldWidth;
-    canvas.height = config.worldHeight;
+    canvas.width = config.width;
+    canvas.height = config.height;
 
     context = canvas.getContext('2d');
     myApp.validateContext(context);
 
-    // initialize world
-    world = new myApp.World(
-        Math.floor(config.worldHeight / config.cellWidth), // rows
-        Math.floor(config.worldWidth / config.cellWidth),  // columns
+    // initialize universe
+    universe = new myApp.Universe(
+        Math.floor(config.height / config.cellWidth), // rows
+        Math.floor(config.width / config.cellWidth),  // columns
         config.cellWidth,
         config.cellColor
     );
-    world.init();
+    universe.init();
 
     isInitialized = true;
   };
@@ -134,9 +134,9 @@ GOL.game = (function(myApp, global) {
   var animate = function() {
     global.window.setTimeout(function() {
       if (isActive) {
-        world.clear(context);
-        world.draw(context);
-        world.update();
+        universe.clear(context);
+        universe.draw(context);
+        universe.update();
 
         global.window.requestAnimationFrame(animate);
       }
@@ -156,8 +156,8 @@ GOL.game = (function(myApp, global) {
      *
      * Object possible attributes and default values:
      * - `canvasId` : Id of the html5  canvas to be used by the game. Defaults to `gol`.
-     * - `worldWidth`: world width in pixels. Defaults to 300.
-     * - `worldHeight`: world height in pixels. Defaults to 200.
+     * - `width`: universe width in pixels. Defaults to 300.
+     * - `height`: universe height in pixels. Defaults to 200.
      * - `cellWidth`: cell width in pixels. Defaults to 20.
      * - `cellColor`: color for new cells. Defaults to `black`.
      * - `fps`: frames per second. Defaults to `15`.
@@ -208,10 +208,10 @@ GOL.game = (function(myApp, global) {
      * @chainable
      */
     stop: function() {
-      world.clear(context);
+      universe.clear(context);
       isActive = false;
       isInitialized = false;
-      world = null;
+      universe = null;
       return this;
     },
 
@@ -252,29 +252,29 @@ GOL.game = (function(myApp, global) {
     },
 
     /**
-     * Get game world.
+     * Get game universe.
      *
-     * @method getWorld
+     * @method getUniverse
      * @static
-     * @return {World} World object used in the game.
+     * @return {Universe} Universe object used in the game.
      */
-    getWorld: function() {
-      return world;
+    getUniverse: function() {
+      return universe;
     }
   };
 }(GOL, this));
 
 /**
- * A cells world.
+ * A Life universe.
  *
- * @class World
+ * @class Universe 
  * @constructor
  * @param {Integer} rows Number of rows
  * @param {Integer} cols Number of columns
  * @param {Integer} cellWidth Cell width (in pixels)
  * @param {string} color A valid CSS color. Defaults to 'black'
  */
-GOL.World = function(rows, cols, cellWidth, cellColor) {
+GOL.Universe = function(rows, cols, cellWidth, cellColor) {
   this.rows = rows;
   this.cols = cols;
   this.cellWidth = cellWidth;
@@ -284,13 +284,13 @@ GOL.World = function(rows, cols, cellWidth, cellColor) {
 }
 
 /**
- * Initialize the world
+ * Initialize the universe
  *
- * TODO `map` argument for initializing the world (default to "random")
+ * TODO `map` argument for initializing the universe (default to "random")
  *
  * @method init
  */
-GOL.World.prototype.init = function() {
+GOL.Universe.prototype.init = function() {
   // random cell status
   this.cells = new Array(this.rows);
   for (var i = 0; i < this.rows; i++) {
@@ -321,7 +321,7 @@ GOL.World.prototype.init = function() {
  * @param {Integer} col Cell column number
  * @return {Array} Array of neighbours
  */
-GOL.World.prototype.getCellNeighbours = function(row, col) {
+GOL.Universe.prototype.getCellNeighbours = function(row, col) {
   var neighbours = new Array(8);
   var index = 0;
 
@@ -336,7 +336,7 @@ GOL.World.prototype.getCellNeighbours = function(row, col) {
 }
 
 /**
- * Update the world
+ * Update the universe.
  *
  * 23/3 implementation:
  * - Any live cell with fewer than two live neighbours dies. 
@@ -346,7 +346,7 @@ GOL.World.prototype.getCellNeighbours = function(row, col) {
  *
  * @method update
  */
-GOL.World.prototype.update = function() {
+GOL.Universe.prototype.update = function() {
   var newCells = this.cloneCells();
 
   for (var i = 0; i < this.rows; i++) {
@@ -376,12 +376,12 @@ GOL.World.prototype.update = function() {
 }
 
 /**
- * Draw the world.
+ * Draw the universe.
  *
  * @method draw
  * @param {object} context The html5 canvas context
  */
-GOL.World.prototype.draw = function(context) {
+GOL.Universe.prototype.draw = function(context) {
   GOL.validateContext(context);
 
   for (var i = 0; i < this.rows; i++) {
@@ -392,12 +392,12 @@ GOL.World.prototype.draw = function(context) {
 }
 
 /**
- * Clear the world drawing.
+ * Clear the universe drawing.
  *
  * @method clear
  * @param {object} context The html5 canvas context
  */
-GOL.World.prototype.clear = function(context) {
+GOL.Universe.prototype.clear = function(context) {
   GOL.validateContext(context);
   // FIXME way too hackish
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -411,7 +411,7 @@ GOL.World.prototype.clear = function(context) {
  * @method cloneCells
  * @return {Array} 2d array of cloned cells
  */
-GOL.World.prototype.cloneCells = function() {
+GOL.Universe.prototype.cloneCells = function() {
   var clonedCells = new Array(this.rows);
 
   for (var i = 0; i < this.rows; i++) {
@@ -427,14 +427,14 @@ GOL.World.prototype.cloneCells = function() {
  * To string.
  *
  * @method toString
- * @return {String} String representation of the world.
+ * @return {String} String representation of the universe.
  */
-GOL.World.prototype.toString = function() {
-  return 'world aged ' + this.age; //FIXME
+GOL.Universe.prototype.toString = function() {
+  return 'universe aged ' + this.age; //FIXME
 }
 
 /**
- * A world cell.
+ * A Life cell.
  *
  * @class Cell
  * @constructor
