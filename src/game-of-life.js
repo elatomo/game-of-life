@@ -105,7 +105,7 @@ GOL.game = (function(myApp, global) {
    */
   var init = function() {
     // set up canvas and context
-    canvas = global.document.getElementById(config['canvasId']);
+    canvas = global.document.getElementById(config.canvasId);
     myApp.validateCanvas(canvas);
     canvas.width = config.width;
     canvas.height = config.height;
@@ -164,7 +164,7 @@ GOL.game = (function(myApp, global) {
      */
     configure: function(userConfig) {
       if (isInitialized) {
-        throw new Error("Can't re-configure a running game. Please, stop it first")
+        throw new Error("Can't re-configure a running game. Please, stop it first");
       }
 
       for (var prop in userConfig) {
@@ -523,3 +523,4 @@ GOL.validateContext = function(context) {
   }
   return true;
 }
+
